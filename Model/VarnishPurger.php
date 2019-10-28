@@ -46,7 +46,7 @@ class VarnishPurger implements VarnishPurgerInterface
      */
     protected $lockHandler;
 
-    /**regenerateAll
+    /**
      * @var ScopeConfigInterface
      */
     protected $scopeConfig;
@@ -432,6 +432,16 @@ class VarnishPurger implements VarnishPurgerInterface
                 $purgeBaseUrl .= "/";
             }
         }
+    }
+
+    /**
+     * @param string $regenBaseUrl
+     * @return VarnishPurgerInterface
+     */
+    public function setOverrideRegenBaseUrl($regenBaseUrl): VarnishPurgerInterface
+    {
+        $this->regenBaseUrl = $regenBaseUrl;
+        return $this;
     }
 
     /**

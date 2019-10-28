@@ -90,4 +90,10 @@ interface VarnishPurgerInterface
      * @return string
      */
     public function getLockMessage(): string;
+
+    /**
+     * @param string $regenBaseUrl
+     * @return VarnishPurgerInterface
+     */
+    public function setOverrideRegenBaseUrl($regenBaseUrl): VarnishPurgerInterface;
 }

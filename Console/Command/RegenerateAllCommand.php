@@ -12,6 +12,9 @@ class RegenerateAllCommand extends AbstractPurgeCommand
      */
     const CLI_COMMAND = 'lm-varnish:cache-all';
 
+    /** @var string  */
+    const BASE_URL = 'base-url';
+
     /**
      * {@inheritdoc}
      */
@@ -23,6 +26,11 @@ class RegenerateAllCommand extends AbstractPurgeCommand
                 self::STORE_VIEW_ID,
                 null,
                 InputOption::VALUE_OPTIONAL
+            )
+            ->addOption(
+                self::BASE_URL,
+                null,
+                InputOption::VALUE_OPTIONAL
             );
     }
 
@@ -32,6 +40,7 @@ class RegenerateAllCommand extends AbstractPurgeCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->varnishPurger->setStoreViewId((int) $input->getOption(self::STORE_VIEW_ID));
+        $this->varnishPurger->setOverrideRegenBaseUrl($input->getOption(self::BASE_URL));
         $this->varnishPurger->regenerateAll();
     }
 }
