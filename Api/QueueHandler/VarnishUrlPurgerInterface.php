@@ -24,4 +24,10 @@ interface VarnishUrlPurgerInterface
      * @return void
      */
     public function runPurgeQueue(): void;
+
+    /**
+     * @param string $storeUrl
+     * @return $this
+     */
+    public function setStoreUrl($storeUrl);
 }

@@ -70,10 +70,7 @@ class VarnishUrlRegenerator extends AbstractQueueHandler implements VarnishUrlRe
     private function createRequest(string $url): void
     {
         $client = $this->clientFactory->create($this->loop);
-        $varyString = $this->context->getVaryString();
-        $request = $client->request('GET', $url, $varyString ? [
-            'Cookie' => 'X-Magento-Vary=' . $varyString
-        ] : []);
+        $request = $client->request('GET', $url, $this->buildHeaders());
         $request->on('response', function (Response $response) use ($url) {
             $response->on(
                 'end',
@@ -85,5 +82,18 @@ class VarnishUrlRegenerator extends AbstractQueueHandler implements VarnishUrlRe
             );
         });
         $request->end();
+    }
+
+    private function buildHeaders(): array
+    {
+        // Force host to use the store URL
+        $headers = [
+            'Host' => $this->storeUrl
+        ];
+        $varyString = $this->context->getVaryString();
+        if ($varyString) {
+            $headers['Cookie'] = 'X-Magento-Vary=' . $varyString;
+        }
+        return $headers;
     }
 }

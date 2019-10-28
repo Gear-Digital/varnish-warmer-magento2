@@ -10,6 +10,7 @@ namespace LizardMedia\VarnishWarmer\Model\QueueHandler;
 
 use LizardMedia\VarnishWarmer\Api\Config\GeneralConfigProviderInterface;
 use LizardMedia\VarnishWarmer\Api\ProgressHandler\QueueProgressLoggerInterface;
+use LizardMedia\VarnishWarmer\Api\QueueHandler\VarnishUrlRegeneratorInterface;
 use LizardMedia\VarnishWarmer\Model\Adapter\ReactPHP\ClientFactory;
 use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;
@@ -66,6 +67,11 @@ abstract class AbstractQueueHandler
      * @var Context
      */
     protected $context;
+
+    /**
+     * @var string
+     */
+    protected $storeUrl;
 
     /**
      * AbstractQueueHandler constructor.
@@ -125,5 +131,15 @@ abstract class AbstractQueueHandler
     protected function logProgress()
     {
         $this->queueProgressLogger->logProgress($this->getQueueProcessType(), $this->counter, $this->total);
+    }
+
+    /**
+     * @param string $storeUrl
+     * @return $this
+     */
+    public function setStoreUrl($storeUrl)
+    {
+        $this->storeUrl = $storeUrl;
+        return $this;
     }
 }

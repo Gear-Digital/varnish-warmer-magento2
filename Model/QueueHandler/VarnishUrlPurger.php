@@ -140,11 +140,13 @@ class VarnishUrlPurger extends AbstractQueueHandler implements VarnishUrlPurgerI
      */
     private function buildHeaders(): array
     {
-        $headers = [];
-        $headers[] = 'X-Magento-Tags-Pattern: .*';
+        $headers = [
+            'Host' => $this->storeUrl,
+            'X-Magento-Tags-Pattern' => '.*'
+        ];
         if ($this->purgingConfigProvider->isPurgeCustomHostEnabled()
             && $this->purgingConfigProvider->getAdditionalHostForHeader()) {
-            $headers[] = "Host: {$this->purgingConfigProvider->getAdditionalHostForHeader()}";
+            $headers['Host'] = $this->purgingConfigProvider->getAdditionalHostForHeader();
         }
         return $headers;
     }

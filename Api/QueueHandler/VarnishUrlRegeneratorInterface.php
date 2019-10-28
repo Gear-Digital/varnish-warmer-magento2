@@ -24,4 +24,10 @@ interface VarnishUrlRegeneratorInterface
      * @return void
      */
     public function runRegenerationQueue(): void;
+
+    /**
+     * @param string $storeUrl
+     * @return $this
+     */
+    public function setStoreUrl($storeUrl);
 }

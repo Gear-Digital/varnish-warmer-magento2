@@ -255,6 +255,13 @@ class VarnishPurger implements VarnishPurgerInterface
     public function setStoreViewId(int $storeViewId)
     {
         $this->storeViewId = $storeViewId;
+        $baseUrl = $this->scopeConfig->getValue(
+            Store::XML_PATH_SECURE_BASE_URL,
+            ScopeInterface::SCOPE_STORE,
+            $storeViewId
+        );
+        $this->varnishUrlRegenerator->setStoreUrl($baseUrl);
+        $this->varnishUrlPurger->setStoreUrl($baseUrl);
     }
 
     /**
