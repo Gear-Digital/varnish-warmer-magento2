@@ -3,32 +3,29 @@ namespace LizardMedia\VarnishWarmer\Model\UrlProvider;
 
 use LizardMedia\VarnishWarmer\Api\UrlProvider\CmsPageUrlProviderInterface;
 use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\App\ResourceConnectionFactory;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 
 class CmsPageUrlProvider implements CmsPageUrlProviderInterface
 {
     /**
-     * @var ResourceConnectionFactory
+     * @var ResourceConnection
      */
-    protected $resourceConnectionFactory;
+    protected $resourceConnection;
 
     /**
      * ProductUrlProvider constructor.
-     * @param ResourceConnectionFactory $resourceConnectionFactory
+     * @param ResourceConnection $resourceConnection
      */
     public function __construct(
-        ResourceConnectionFactory $resourceConnectionFactory
+        ResourceConnection $resourceConnection
     ) {
-        $this->resourceConnectionFactory = $resourceConnectionFactory;
+        $this->resourceConnection = $resourceConnection;
     }
 
     public function getActiveUrls(): array
     {
-        /** @var ResourceConnection $connection */
-        $resourceConnection = $this->resourceConnectionFactory->create();
         /** @var AdapterInterface $connection */
-        $connection = $resourceConnection->getConnection();
+        $connection = $this->resourceConnection->getConnection();
 
         $cmsPageIds = $this->getAvailableCmsPageIds();
         $select = $connection
