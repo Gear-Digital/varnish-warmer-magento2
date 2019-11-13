@@ -50,10 +50,8 @@ class CmsPageUrlProvider implements CmsPageUrlProviderInterface
      */
     protected function getAvailableCmsPageIds(): array
     {
-        /** @var ResourceConnection $connection */
-        $resourceConnection = $this->resourceConnectionFactory->create();
         /** @var AdapterInterface $connection */
-        $connection = $resourceConnection->getConnection();
+        $connection = $this->resourceConnection->getConnection();
 
         $select = $connection
             ->select()
