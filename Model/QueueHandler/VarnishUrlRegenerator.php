@@ -87,9 +87,12 @@ class VarnishUrlRegenerator extends AbstractQueueHandler implements VarnishUrlRe
     private function buildHeaders(): array
     {
         // Force host to use the store URL
-        $headers = [
-            'Host' => $this->storeUrl
-        ];
+        $headers = [];
+        // Force host to use the store URL
+        $parsedUrl = parse_url($this->storeUrl);
+        if (isset($parsedUrl['host'])) {
+            $headers['Host'] = $parsedUrl['host'];
+        }
         $varyString = $this->context->getVaryString();
         if ($varyString) {
             $headers['Cookie'] = 'X-Magento-Vary=' . $varyString;
