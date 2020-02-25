@@ -92,6 +92,9 @@ class VarnishUrlRegenerator extends AbstractQueueHandler implements VarnishUrlRe
         if (isset($parsedUrl['host'])) {
             $headers['Host'] = $parsedUrl['host'];
         }
+        if (isset($parsedUrl['scheme'])) {
+            $headers['X-Forwarded-Proto'] = $parsedUrl['scheme'];
+        }
         $varyString = $this->context->getVaryString();
         if ($varyString) {
             $headers['Cookie'] = 'X-Magento-Vary=' . $varyString;
