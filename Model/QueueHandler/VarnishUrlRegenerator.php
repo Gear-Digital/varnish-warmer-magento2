@@ -86,7 +86,6 @@ class VarnishUrlRegenerator extends AbstractQueueHandler implements VarnishUrlRe
 
     private function buildHeaders(): array
     {
-        // Force host to use the store URL
         $headers = [];
         // Force host to use the store URL
         $parsedUrl = parse_url($this->storeUrl);
